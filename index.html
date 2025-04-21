@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>User Dashboard</h1>
+  </header>
+
+  <!-- Basic Interaction Section -->
+  <div id="basicSection">
+    <button id="basicButton">Click me!</button>
+    <p id="basicResponse"></p>
+  </div>
+
+  <!-- Form Validation -->
+  <div id="formSection">
+    <h3>Sign Up Form</h3>
+    <form id="signupForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required><br>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="formResponse"></p>
+  </div>
+
+  <!-- AJAX Request -->
+  <div id="ajaxSection">
+    <button id="fetchButton">Fetch Data</button>
+    <div id="ajaxResponse"></div>
+  </div>
+
+  <!-- Authentication & Login -->
+  <div id="authSection">
+    <button id="loginBtn">Login</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
+    <div id="userModal" style="display:none;">
+      <h3>Welcome!</h3>
+      <button id="closeModalBtn">Close</button>
+    </div>
+  </div>
+
+  <!-- Drag and Drop -->
+  <div id="dragSection">
+    <h3>Drag and Drop Example</h3>
+    <div id="dragItem" class="draggable" draggable="true">Drag Me</div>
+    <div id="dropArea" class="dropArea">Drop Here</div>
+  </div>
+
+  <!-- Real-time Updates -->
+  <div id="realtimeSection">
+    <h3>Real-time Notifications</h3>
+    <button id="sendNotification">Send Notification</button>
+    <ul id="notificationList"></ul>
+  </div>
+
+  <!-- Data Table (Advanced) -->
+  <div id="tableSection">
+    <h3>User Table</h3>
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>john.doe@example.com</td>
+        </tr>
+      </tbody>
+    </table>
+    <button id="addRowBtn">Add Row</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
