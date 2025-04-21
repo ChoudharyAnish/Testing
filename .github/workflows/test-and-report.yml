@@ -18,10 +18,10 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-      run: npm install
+      run: npm install  # Install all required dependencies (including Twilio)
 
     - name: Run Playwright tests and output JSON report
-      run: npx playwright test --reporter=json > test-results.json || true  # This allows workflow to continue even if tests fail
+      run: npx playwright test --reporter=json > test-results.json || true
 
     - name: Send WhatsApp test report
       env:
