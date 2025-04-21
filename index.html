@@ -2,84 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Automation Testing UI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>User Dashboard</h1>
-  </header>
+  <h1>Automation Testing Playground</h1>
 
-  <!-- Basic Interaction Section -->
-  <div id="basicSection">
-    <button id="basicButton">Click me!</button>
-    <p id="basicResponse"></p>
-  </div>
+  <section class="basic">
+    <h2>Basic Elements</h2>
+    <input type="text" placeholder="Enter name" id="nameInput">
+    <button onclick="handleClick()">Click Me</button>
+    <label><input type="checkbox" id="acceptTerms"> Accept Terms</label>
+  </section>
 
-  <!-- Form Validation -->
-  <div id="formSection">
-    <h3>Sign Up Form</h3>
-    <form id="signupForm">
-      <label for="username">Username:</label>
-      <input type="text" id="username" required><br>
-      <label for="email">Email:</label>
-      <input type="email" id="email" required><br>
+  <section class="intermediate">
+    <h2>Form with Validation</h2>
+    <form id="testForm">
+      <input type="email" id="emailInput" placeholder="Email">
+      <select id="dropdown">
+        <option value="">Choose</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+      </select>
       <button type="submit">Submit</button>
     </form>
-    <p id="formResponse"></p>
-  </div>
+    <div id="formMessage"></div>
+  </section>
 
-  <!-- AJAX Request -->
-  <div id="ajaxSection">
-    <button id="fetchButton">Fetch Data</button>
-    <div id="ajaxResponse"></div>
-  </div>
-
-  <!-- Authentication & Login -->
-  <div id="authSection">
-    <button id="loginBtn">Login</button>
-    <button id="logoutBtn" style="display:none;">Logout</button>
-    <div id="userModal" style="display:none;">
-      <h3>Welcome!</h3>
-      <button id="closeModalBtn">Close</button>
-    </div>
-  </div>
-
-  <!-- Drag and Drop -->
-  <div id="dragSection">
-    <h3>Drag and Drop Example</h3>
-    <div id="dragItem" class="draggable" draggable="true">Drag Me</div>
-    <div id="dropArea" class="dropArea">Drop Here</div>
-  </div>
-
-  <!-- Real-time Updates -->
-  <div id="realtimeSection">
-    <h3>Real-time Notifications</h3>
-    <button id="sendNotification">Send Notification</button>
-    <ul id="notificationList"></ul>
-  </div>
-
-  <!-- Data Table (Advanced) -->
-  <div id="tableSection">
-    <h3>User Table</h3>
-    <table id="userTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td>
-          <td>john.doe@example.com</td>
-        </tr>
-      </tbody>
+  <section class="advanced">
+    <h2>Data Table (API Fetch)</h2>
+    <table id="dataTable">
+      <thead><tr><th>ID</th><th>Title</th></tr></thead>
+      <tbody></tbody>
     </table>
-    <button id="addRowBtn">Add Row</button>
-  </div>
 
+    <h2>Chart</h2>
+    <canvas id="myChart" width="400" height="200"></canvas>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="data.js"></script>
+  <script src="chart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
