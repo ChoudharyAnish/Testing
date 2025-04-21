@@ -1,0 +1,32 @@
+name: Run Playwright Tests and Send WhatsApp Report
+
+on:
+  push:
+    branches: [main]  # or your working branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Playwright tests and output JSON report
+      run: npx playwright test --reporter=json > test-results.json
+
+    - name: Send WhatsApp test report
+      env:
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+        TWILIO_TO: ${{ secrets.TWILIO_TO }}
+        TWILIO_FROM: ${{ secrets.TWILIO_FROM }}
+      run: node sendReport.js
