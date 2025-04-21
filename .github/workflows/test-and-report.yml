@@ -21,7 +21,7 @@ jobs:
       run: npm install
 
     - name: Run Playwright tests and output JSON report
-      run: npx playwright test --reporter=json > test-results.json
+      run: npx playwright test --reporter=json > test-results.json || true  # This allows workflow to continue even if tests fail
 
     - name: Send WhatsApp test report
       env:
