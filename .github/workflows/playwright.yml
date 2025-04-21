@@ -1,9 +1,9 @@
-name: Run Playwright Tests
+name: Run Playwright Tests and Send Report
 
 on:
   push:
     branches:
-      - main  # or your working branch
+      - main # or your working branch
 
 jobs:
   test:
@@ -16,13 +16,13 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version: 18
 
     - name: Install dependencies
       run: npm install
 
-    - name: Run Playwright tests with debug and trace
-      run: npx playwright test --reporter=json --debug --headed --trace on > test-results.json
+    - name: Run Playwright tests and output JSON report
+      run: npx playwright test --reporter=json --debug --headed > test-results.json
 
     - name: Send WhatsApp test report
       env:
