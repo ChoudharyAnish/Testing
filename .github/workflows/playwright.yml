@@ -21,8 +21,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run Playwright tests with debug mode and output JSON report
-      run: npx playwright test --reporter=json --debug > test-results.json
+    - name: Run Playwright tests with verbose logging and output JSON report
+      run: npx playwright test --reporter=json --debug --verbose > test-results.json
 
     - name: Send WhatsApp test report
       env:
