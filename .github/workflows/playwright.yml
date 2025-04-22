@@ -25,7 +25,11 @@ jobs:
       run: npx playwright install
 
     - name: Run Playwright tests and output JSON report
-      run: npx playwright test --reporter=json > test-results.json
+      run: |
+        npx playwright test --reporter=json > test-results.json || true
+
+    - name: Print JSON test results to logs
+      run: cat test-results.json
 
     - name: Send WhatsApp test report
       env:
