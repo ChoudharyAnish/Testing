@@ -1,54 +1,55 @@
 const fs = require('fs');
 const twilio = require('twilio');
 
-// Load secrets from environment variables
+// Read environment variables
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const to = process.env.TWILIO_TO;
-const from = process.env.TWILIO_FROM;
+const authToken  = process.env.TWILIO_AUTH_TOKEN;
+const to         = process.env.TWILIO_TO;
+const from       = process.env.TWILIO_FROM;
 
-const client = twilio(accountSid, authToken);
+// Load Playwright report
+const reportPath = './report.json';
+let summary = '⚠️ Playwright report not found.';
 
-// Read and parse Playwright JSON report
-const raw = fs.readFileSync('test-results.json', 'utf-8');
-const data = JSON.parse(raw);
+if (fs.existsSync(reportPath)) {
+  const report = JSON.parse(fs.readFileSync(reportPath, 'utf-8'));
 
-// Counters
-let total = 0, passed = 0, failed = 0;
+  const total = report.suites
+    .flatMap(suite => suite.specs)
+    .reduce((sum, spec) => sum + spec.tests.length, 0);
 
-// Navigate through test suites and count test outcomes
-for (const topSuite of data.suites || []) {
-  for (const suite of topSuite.suites || []) {
-    for (const test of suite.tests || []) {
-      total++;
-      if (test.outcome === 'passed') passed++;
-      else failed++;
-    }
-  }
+  const passed = report.suites
+    .flatMap(suite => suite.specs)
+    .flatMap(spec => spec.tests)
+    .filter(test => test.results.some(r => r.status === 'passed')).length;
+
+  const failed = report.suites
+    .flatMap(suite => suite.specs)
+    .flatMap(spec => spec.tests)
+    .filter(test => test.results.some(r => r.status === 'failed')).length;
+
+  const timestamp = new Date().toLocaleString();
+
+  summary = `🧪 *Test Report Summary*\n` +
+            `--------------------------\n` +
+            `📦 Total Tests: ${total}\n` +
+            `✅ Passed: ${passed}\n` +
+            `❌ Failed: ${failed}\n` +
+            `--------------------------\n` +
+            `🕓 Time: ${timestamp}`;
 }
 
-// Format the WhatsApp message
-const messageBody = `
-🧪 *Test Report Summary*
---------------------------
-📦 Total Tests: ${total}
-✅ Passed: ${passed}
-❌ Failed: ${failed}
---------------------------
-🕓 Time: ${new Date().toLocaleString()}
-`.trim();
-
-// Send WhatsApp message via Twilio
+// Send message via Twilio
+const client = twilio(accountSid, authToken);
 client.messages
   .create({
-    body: messageBody,
-    from: `whatsapp:${from}`,
-    to: `whatsapp:${to}`,
+    body: summary,
+    from,
+    to,
   })
   .then(message => {
-    console.log(`WhatsApp report sent. SID: ${message.sid}`);
+    console.log(`✅ WhatsApp report sent: ${message.sid}`);
   })
   .catch(error => {
-    console.error('Failed to send WhatsApp message:', error.message);
-    process.exit(1);
+    console.error('❌ Failed to send WhatsApp message:', error.message);
   });
